@@ -33,7 +33,7 @@ terraform -version
 ## ☸️ Configure kubeconfig for EKS
 
 ```bash
-aws eks --region ap-south-1 update-kubeconfig --name devopsshack-cluster
+aws eks --region ap-northeast-1 update-kubeconfig --name anurag-cluster
 ```
 
 
@@ -62,8 +62,8 @@ eksctl version
 
 ```bash
 eksctl utils associate-iam-oidc-provider \
-  --region ap-south-1 \
-  --cluster devopsshack-cluster \
+  --region ap-northeast-1 \
+  --cluster anurag-cluster \
   --approve
 ```
 
@@ -71,10 +71,10 @@ eksctl utils associate-iam-oidc-provider \
 
 ```bash
 eksctl create iamserviceaccount \
-  --region ap-south-1 \
+  --region ap-northeast-1 \
   --name ebs-csi-controller-sa \
   --namespace kube-system \
-  --cluster devopsshack-cluster \
+  --cluster anurag-cluster \
   --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
   --approve \
   --override-existing-serviceaccounts
