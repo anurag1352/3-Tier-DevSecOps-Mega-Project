@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
     
@@ -12,7 +11,7 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                git branch: 'docker-build-deploy', url: 'https://github.com/jaiswaladi246/3-Tier-DevSecOps-Mega-Project.git'
+                git branch: 'docker-build-deploy', url: 'https://github.com/anurag1352/3-Tier-DevSecOps-Mega-Project.git'
             }
         }
         
@@ -63,11 +62,11 @@ pipeline {
         stage('Build-Tag & Push Backend Docker Image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-cred') {
+                    withDockerRegistry(credentialsId: 'docker-creds') {
                         dir('api') {
-                            sh 'docker build -t adijaiswal/backend:latest .'
-                            sh 'trivy image --format table -o backend-image-report.html adijaiswal/backend:latest '
-                            sh 'docker push adijaiswal/backend:latest'
+                            sh 'docker build -t anurag904/backend:latest .'
+                            sh 'trivy image --format table -o backend-image-report.html anurag904/backend:latest '
+                            sh 'docker push anurag904/backend:latest'
                            
                         }
                     }
@@ -78,11 +77,11 @@ pipeline {
         stage('Build-Tag & Push Frontend Docker Image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-cred') {
+                    withDockerRegistry(credentialsId: 'docker-creds') {
                         dir('client') {
-                            sh 'docker build -t adijaiswal/frontend:latest .'
-                            sh 'trivy image --format table -o frontend-image-report.html adijaiswal/frontend:latest '
-                            sh 'docker push adijaiswal/frontend:latest'
+                            sh 'docker build -t anurag904/frontend:latest .'
+                            sh 'trivy image --format table -o frontend-image-report.html anurag904/frontend:latest '
+                            sh 'docker push anurag904/frontend:latest'
                         }
                     }
                 }
@@ -92,7 +91,7 @@ pipeline {
         stage('Docker Deploy via Compose') {
             steps {
                 script {
-                    sh 'docker-compose up -d'
+                    sh 'docker-compose down && docker-compose up -d'
                 }
             }
         }
